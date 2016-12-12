@@ -1,0 +1,67 @@
+<template>
+	<scroller>
+		<div class="list" repeat="{{list}}">
+        	<div class="cell" onClick="clickWechat">
+        		<text class="content">{{title}}}</text>
+        	</div>
+        </div>
+	</scroller>
+</template>
+
+<style>
+	.list{
+		width : 750;
+	}
+	.cell{
+		left : 20;
+		width : 730;
+		height : 80;
+		flex-direction : column;
+		border-style:solid;
+  		border-bottom-color:#dddddd;
+  		border-bottom-width:1;
+	}
+    .content{
+        top : 30;
+    }
+</style>
+
+<script>
+	var stream = require('@weex-module/stream')
+    module.exports = {
+        data: {
+        	baseUrl : "http://v.juhe.cn/weixin/query?key=61be1097e33a2ddf7446d6a16d89bcfb&pno=1&dtype=json",
+            list : [{"":""}],
+            jsonData : "",
+            resultData : "",
+        },
+        created : function() {
+        	var self = this;
+
+        	self.getWechatData();
+        },
+        methods:{
+        		clickWechat : function(eventProperties) {
+        			// handling with the event properties
+        			var self = this;
+        			var listData = self.list[0];
+        			this.$openURL(listData.url)
+        		},
+        		getWechatData : function() {
+        			var self = this;
+
+        			stream.sendHttp({
+        				method : 'GET',
+        				url : this.baseUrl,
+        				type : 'json'
+        			}, function(ret){
+        				// process response
+        				console.log("bytes received:" + ret.length);
+        				self.jsonData = JSON.parse(ret);
+        				self.resultData = self.jsonData.result;
+        				self.list = self.resultData.list;
+        			});
+        		}
+        }
+    }
+</script>

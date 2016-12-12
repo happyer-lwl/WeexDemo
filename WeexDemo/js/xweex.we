@@ -1,0 +1,65 @@
+<template>
+    <div class="content">
+        <div class="cell" onClick="clickWechat">
+            <text class="content">微信精选</text>
+        </div>
+        <div class="cell" onClick="clickJoke">
+            <text class="content">笑话大全</text>
+        </div>
+        <div class="cell" onClick="clickHoroscope">
+            <text class="content">星座运势</text>
+        </div>
+        <div class="cell" onClick="clickNews">
+            <text class="content">今日新闻</text>
+        </div>
+    </div>
+</template>
+
+<style>
+    .container{
+        width : 750;
+    }
+	.cell{
+		left : 20;
+		width : 730;
+		height : 80;
+		flex-direction : column;
+		border-style:solid;
+  		border-bottom-color:#dddddd;
+  		border-bottom-width:1;
+	}
+    .content{
+        top : 30;
+    }
+</style>
+
+<script>
+    module.exports = {
+        data: {
+            
+        },
+        methods:{
+        		clickWechat : function(eventProperties) {
+        			// handling with the event properties
+        			console.log(eventProperties)
+
+                    this.$openURL('wechat')
+        		},
+                clickJoke : function(eventProperties) {
+                    // handling with the event properties
+                    console.log(eventProperties)
+                    this.$openURL('joke')
+                },
+                clickHoroscope : function(eventProperties) {
+                    // handling with the event properties
+                    console.log(eventProperties)
+                    this.$openURL('horoscope')
+                },
+                clickNews : function(eventProperties) {
+                    // handling with the event properties
+                    console.log(eventProperties)
+                    this.$openURL('news')
+                }
+        }
+    }
+</script>

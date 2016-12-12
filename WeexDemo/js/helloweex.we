@@ -1,0 +1,61 @@
+<template>
+    <scroller>
+        <div class="list" ontouchstart="handleTouchStart" repeat="{{list}}">
+            <div class="cell">
+            		<text class="content">{{name}} : ${{price}}</text>
+            </div>
+            
+        </div>
+    </scroller>
+</template>
+
+<style>
+	.list{
+		width : 750;
+	}
+	.cell{
+		left : 20;
+		width : 730;
+		height : 80;
+		flex-direction : column;
+		border-style:solid;
+  		border-bottom-color:#dddddd;
+  		border-bottom-width:1;
+	}
+	.content{
+		top : 30;
+	}
+</style>
+
+<script>
+    module.exports = {
+        data: {
+            list : [
+                {name : 'hellohello', price : 100},
+                {name : 'worldworld', price : 200},
+                {name : 'datedate', price : 300},
+                {name : 'hellohello', price : 100},
+                {name : 'worldworld', price : 200},
+                {name : 'datedate', price : 300},
+                {name : 'hellohello', price : 100},
+                {name : 'worldworld', price : 200},
+                {name : 'datedate', price : 300},
+                {name : 'hellohello', price : 100},
+                {name : 'worldworld', price : 200},
+                {name : 'datedate', price : 300},
+                {name : 'hellohello', price : 100},
+                {name : 'worldworld', price : 200},
+                {name : 'datedate', price : 300},
+                {name : 'hellohello', price : 100},
+                {name : 'worldworld', price : 200},
+                {name : 'datedate', price : 300},
+            ]
+        },
+        methods:{
+        		handleTouchStart : function(eventProperties) {
+        			// handling with the event properties
+        			console.log(eventProperties)
+        		}
+        }
+    }
+</script>

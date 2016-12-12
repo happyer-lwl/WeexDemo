@@ -1,0 +1,85 @@
+<template>
+	<scroller>
+        <refresh class="refresh-view" display="{{refresh_display}}" onrefresh="onRefresh">
+            <loading-indicator class="indicator"></loading-indicator>
+            <text class="refresh-arrow" style="text-align:center; color:rgb(238, 162, 54)" if="{{(refresh_display==='hide')}}">pull to refresh</text>
+        </refresh>
+
+		<div class="list" repeat="{{list}}">
+        	<div class="cell">
+        		<text class="content">{{content}}}</text>
+                <div class="seperator"></div>
+        	</div>
+        </div>
+	</scroller>
+</template>
+
+<style>
+    .refresh-view {
+        height: 120px;
+        width: 750px;
+        display: -ms-flex;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+	.list{
+		width : 750;
+	}
+	.cell{
+		left : 20;
+		width : 730;
+		flex-direction : column;
+		border-style:solid;
+  		border-bottom-color:#BBBBBB;
+  		border-bottom-width:1;
+	}
+    .content{
+        top : 25;
+    }
+    .seperator{
+        height : 50;
+    }
+</style>
+
+<script>
+	var stream = require('@weex-module/stream')
+    module.exports = {
+        data: {
+        	baseUrl : "http://japi.juhe.cn/joke/content/list.from?key=a635a01c2474e0d778f63c65e62583c2&page=1&pagesize=20&sort=asc&time=1418745237&dtype=json",
+            list : [],
+            jsonData : "",
+            resultData : "",
+        },
+        created : function() {
+        	var self = this;
+
+        	self.getWechatData();
+        },
+        methods:{
+            onRefresh : function() {
+                var self = this;
+                self.refresh_display = 'show';
+                self.getWechatData();
+            },
+    		getWechatData : function() {
+    			var self = this;
+
+    			stream.sendHttp({
+    				method : 'GET',
+    				url : this.baseUrl,
+    				type : 'json'
+    			}, function(ret){
+    				// process response
+    				console.log("bytes received:" + ret.length);
+    				self.jsonData = JSON.parse(ret);
+    				self.resultData = self.jsonData.result;
+    				self.list = self.resultData.data;
+    			});
+    		}
+        }
+    }
+</script>

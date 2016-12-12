@@ -1,0 +1,135 @@
+<template>
+    <div class="container">
+        <div class="searchBar">
+            <input class="inputBar" id="inputId" placeholder="请输入您的星座"></input>
+            <div class="searchBtn" onClick="searchHoroscope" value="查 询">
+                <text class="searchText">查询</text>
+            </div>
+        </div>
+        <scroller>
+            <div class="info">
+                <div class="infoCell">
+                    <text class="content">星座名称：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">日期：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">综合指数：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">幸运色：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">健康指数：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">爱情指数：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">财运指数：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">幸运数字：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">速配星座：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">工作指数：{{$jsonData}}</text>
+                </div>
+                <div class="infoCell">
+                    <text class="content">今日概述：{{$jsonData}}</text>
+                </div>
+            </div>
+        </scroller>
+    </div>
+</template>
+
+<style>
+    .searchBar{
+        padding-top : 20;
+        height : 70;
+        flex-direction : row;
+    }
+    .inputBar{
+        top : 0;
+        left : 20;
+        width : 500;
+        height : 60;
+        text-align : center;
+        border-style : solid;
+        border-color : #dddddd;
+        border-width : 1;
+    }
+    .searchBtn{
+        left : 50;
+        height : 60;
+        width : 170;
+        background-color : #5baef5;
+        border-radius : 5;
+    }
+    .searchText{
+        color : #FFFFFF;
+        margin-top : 15;
+        text-align : center;
+    }
+	.info{
+        top : 30;
+		width : 750;
+	}
+	.infoCell{
+		left : 20;
+		width : 730;
+		height : 80;
+		flex-direction : column;
+		border-style:solid;
+  		border-bottom-color:#dddddd;
+  		border-bottom-width:1;
+	}
+    .content{
+        top : 30;
+    }
+</style>
+
+<script>
+	var stream = require('@weex-module/stream')
+    require('@weex-module/event')
+    module.exports = {
+        data: {
+        	baseUrl : "http://web.juhe.cn:8080/constellation/getAll?consName=双鱼座&type=today&key=5c1332d0fd4b0834283fead227efa936",
+            jsonData : "",
+        },
+        created : function() {
+        	var self = this;
+
+        	self.getWechatData();
+        },
+        methods:{
+            searchHoroscope : function() {
+                var self = this;
+                var inputText = document.getElementById("inputId").value;
+                self.baseUrl = "http://web.juhe.cn:8080/constellation/getAll?type=today&key=5c1332d0fd4b0834283fead227efa936&consName=" + inputText;
+            },
+    		getWechatData : function() {
+    			var self = this;
+
+    			stream.fetch({
+    				method : 'GET',
+    				url : this.baseUrl,
+                    type : 'json',
+    			}, function(ret){
+    				// process response
+    				console.log("bytes received:" + ret.length);
+    				
+                    self.jsonData= ret["result"];
+                    console.log("bytes received:" + self.jsonData);
+                    this.$openURL(self.jsonData);
+    			}, function(ret){
+                    // process response
+                    console.log(ret.error_code);
+                });
+    		}
+        }
+    }
+</script>

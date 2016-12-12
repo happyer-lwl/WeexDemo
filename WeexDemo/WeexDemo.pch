@@ -1,0 +1,15 @@
+//
+//  WeexDemo.pch
+//  WeexDemo
+//
+//  Created by WyzcWin on 16/12/9.
+//  Copyright © 2016年 lwl. All rights reserved.
+//
+
+#ifndef WeexDemo_pch
+#define WeexDemo_pch
+
+#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
+#endif /* WeexDemo_pch */

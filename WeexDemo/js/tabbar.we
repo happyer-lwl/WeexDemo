@@ -1,0 +1,67 @@
+<template>
+    <div >
+        <text title="hello">hello</text>
+    </div>
+    <div style="flex-direction:column">
+        <wxc-tabbar tab-items = {{tabItems}}></wxc-tabbar>
+    </div>
+</template>
+
+<script>
+    require('weex-components')
+    module.export = {
+        data:{
+            dir:'examples',
+            tabItems:[
+                {
+                    index: 0,
+                    title: 'tab1',
+                    titleColor: '#000000',
+                    icon: '',
+                    image: '',
+                    selectedImage: '',
+                    src: 'component/tabbar/tabbar-item.js?itemId=tab1',
+                    visibility: 'visible',
+                },
+                {
+                    index: 1,
+                    title: 'tab2',
+                    titleColor: '#000000',
+                    icon: '',
+                    image: '',
+                    selectedImage: '',
+                    src: 'component/tabbar/tabbar-item.js?itemId=tab2',
+                    visibility: 'visible',
+                },
+                {
+                    index: 2,
+                    title: 'tab3',
+                    titleColor: '#000000',
+                    icon: '',
+                    image: '',
+                    selectedImage: '',
+                    src: 'component/tabbar/tabbar-item.js?itemId=tab3',
+                    visibility: 'visible',
+                },
+                {
+                    index: 3,
+                    title: 'tab4',
+                    titleColor: '#000000',
+                    icon: '',
+                    image: '',
+                    selectedImage: '',
+                    src: 'component/tabbar/tabbar-item.js?itemId=tab4',
+                    visibility: 'visible',
+                },
+            ],
+        },
+        methods: {
+            ready : function(e){
+                var vm = this;
+                vm.$on('tabBar.onClick', function(e){
+                    var index = e.detail.index;
+                });
+            }
+        }
+    }
+</script>

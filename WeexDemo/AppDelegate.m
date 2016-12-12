@@ -7,6 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import <WeexSDK/WeexSDK.h>
+#import "WXDevTool.h"
+
+#import "EGImageLoader.h"
+#import "EGEventHandler.h"
+
+#import "WeexShowViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,10 +23,44 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    [self initWeex];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[self mainViewController]];
+    
+    self.window.rootViewController = nav;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
+- (void)initWeex{
+    
+    [WXAppConfiguration setAppGroup:@"ALiAPP"];
+    [WXAppConfiguration setAppName:@"Weex"];
+    [WXAppConfiguration setAppVersion:@"1.0.0"];
+    
+    [WXSDKEngine initSDKEnviroment];
+    [WXSDKEngine registerHandler:[EGImageLoader new] withProtocol:@protocol(WXImgLoaderProtocol)];
+    [WXSDKEngine registerHandler:[EGEventHandler new] withProtocol:@protocol(WXEventModuleProtocol)];
+    [WXSDKEngine registerModule:@"event" withClass:[EGEventHandler class]];
+    
+    [WXLog setLogLevel:WXLogLevelWarning];
+}
+
+- (UIViewController *)mainViewController{
+    UIViewController *mainVC = [[WeexShowViewController alloc] init];
+    NSString *path = [NSString stringWithFormat:@"file://%@/xweex.js", [NSBundle mainBundle].bundlePath];
+//    NSString *path = @"http://127.0.0.1:8082/helloweex.js";
+    
+    mainVC.navigationItem.title = @"首页";
+    ((WeexShowViewController *)mainVC).weexUri = [NSURL URLWithString:path];
+    
+    return mainVC;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
